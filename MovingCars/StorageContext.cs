@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+
+namespace MovingCars
+{
+    public class StorageContext : DbContext
+    {
+        public StorageContext()
+            : base("name=DefaultConnection")
+        { }
+    }
+}
