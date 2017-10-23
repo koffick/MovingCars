@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovingCars.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,5 +12,8 @@ namespace MovingCars
         public StorageContext()
             : base("name=DefaultConnection")
         { }
+
+        public DbSet<Driver> Drivers { get; set; }
+
     }
 }

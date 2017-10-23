@@ -44,3 +44,5 @@ D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csprojResolveAssemblyRefer
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csproj.CoreCompileInputs.cache
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.dll
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.pdb
+D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddDriver.resources
+D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csproj.GenerateResource.Cache

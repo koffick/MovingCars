@@ -21,6 +21,8 @@ logs/*
 !.gitkeep
 node_modules
 tmp
+**/.vs
+*.ide
 .idea
 .DS_Store
 bower_components
