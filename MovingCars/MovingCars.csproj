@@ -157,19 +157,28 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\EntityMapProfile.cs" />
     <Compile Include="Mapping\DriverMapProfile.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.Designer.cs">
       <DependentUpon>201710230753340_AddDriver.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710240551422_AddAddress.cs" />
+    <Compile Include="Migrations\201710240551422_AddAddress.Designer.cs">
+      <DependentUpon>201710240551422_AddAddress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\ViewModel\AddressViewModel.cs" />
     <Compile Include="Models\ViewModel\DriverViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorageContext.cs" />
@@ -454,9 +463,14 @@
     <Content Include="Views\Driver\List.cshtml" />
     <Content Include="Views\Driver\_CreatePartial.cshtml" />
     <Content Include="Views\Driver\_EditPartial.cshtml" />
+    <Content Include="Views\Address\List.cshtml" />
+    <Content Include="Views\Address\_CreatePartial.cshtml" />
+    <Content Include="Views\Address\_EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Фввкуы\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -474,6 +488,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710230753340_AddDriver.resx">
       <DependentUpon>201710230753340_AddDriver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710240551422_AddAddress.resx">
+      <DependentUpon>201710240551422_AddAddress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

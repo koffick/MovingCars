@@ -4,41 +4,43 @@ using MovingCars.Mapping;
 using MovingCars.Models;
 using MovingCars.Models.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MovingCars.Controllers
 {
-    public class DriverController : Controller
+    public class AddressController : Controller
     {
         private StorageContext db;
         private IMapper mapper;
 
-        public DriverController()
+        public AddressController()
         {
             this.db = new StorageContext();
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<DriverMapProfile>();
+                cfg.AddProfile<EntityMapProfile<AddressViewModel, Address>>();
             });
             this.mapper = config.CreateMapper();
         }
 
-        // GET: Driver
+        // GET: Фввкуы
         public ActionResult List()
         {
-            ViewBag.Message = "Список водителей, с возможностью редактирования.";
-            var drivers = db.Drivers;
-            return View(drivers.ToList());
+            ViewBag.Message = "Справочник адресов, с возможностью редактирования.";
+            var addresses = db.Addresses;
+            return View(addresses.ToList());
         }
 
         public ActionResult Get([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
-            IQueryable<Driver> query = db.Drivers;
+            IQueryable<Address> query = db.Addresses;
             var totalCount = query.Count();
 
             // Searching and sorting
@@ -56,65 +58,64 @@ namespace MovingCars.Controllers
 
         }
 
-
         // GET: Asset/Create
         public ActionResult Create()
         {
-            var model = new DriverViewModel();
+            var model = new AddressViewModel();
             return View("_CreatePartial", model);
         }
 
         //POST: Asset/Create
         [HttpPost]
-        public async Task<ActionResult> Create(DriverViewModel driverVM)
+        public async Task<ActionResult> Create(AddressViewModel addressVM)
         {
 
 
             if (!ModelState.IsValid)
-                return View("_CreatePartial", driverVM);
+                return View("_CreatePartial", addressVM);
 
-            Driver driver = mapper.Map<DriverViewModel, Driver>(driverVM);
+            Address driver = mapper.Map<AddressViewModel, Address>(addressVM);
 
-            db.Drivers.Add(driver);
+            db.Addresses.Add(driver);
             var task = db.SaveChangesAsync();
             await task;
 
             if (task.Exception != null)
             {
                 ModelState.AddModelError("", "Не удалось добавить водителя");
-                return View("_CreatePartial", driverVM);
+                return View("_CreatePartial", addressVM);
             }
 
             return Content("success");
         }
 
         // GET: Asset/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            var driver = db.Drivers.FirstOrDefault(x => x.Id == id);
+            var address = db.Addresses.FirstOrDefault(x => x.Id == id);
 
-            DriverViewModel driverViewModel = mapper.Map<Driver, DriverViewModel>(driver);
+            AddressViewModel addressViewModel = mapper.Map<Address, AddressViewModel>(address);
 
             if (Request.IsAjaxRequest())
-                return PartialView("_EditPartial", driverViewModel);
-            return View(driverViewModel);
+                return PartialView("_EditPartial", addressViewModel);
+            return View(addressViewModel);
         }
 
         // POST: Asset/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(DriverViewModel driverVM)
+        public async Task<ActionResult> Edit(AddressViewModel addressVM)
         {
 
             if (!ModelState.IsValid)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", driverVM);
+                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", addressVM);
             }
 
-            Driver driver = mapper.Map<DriverViewModel, Driver>(driverVM);
+            Address address = mapper.Map<AddressViewModel, Address>(addressVM);
 
-            db.Drivers.Attach(driver);
-            db.Entry(driver).State = EntityState.Modified;
+            db.Addresses.Attach(address);
+            db.Entry(address).State = EntityState.Modified;
             var task = db.SaveChangesAsync();
             await task;
 
@@ -122,7 +123,7 @@ namespace MovingCars.Controllers
             {
                 ModelState.AddModelError("", "Unable to update the Asset");
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", driverVM);
+                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", addressVM);
             }
 
             if (Request.IsAjaxRequest())
@@ -134,16 +135,19 @@ namespace MovingCars.Controllers
 
         }
 
-        private IQueryable<Driver> SearchAssets(IDataTablesRequest requestModel, IQueryable<Driver> query)
+        private IQueryable<Address> SearchAssets(IDataTablesRequest requestModel, IQueryable<Address> query)
         {
 
             // Apply filters
             if (requestModel.Search.Value != string.Empty)
             {
                 var value = requestModel.Search.Value.Trim();
-                query = query.Where(p => p.FirstName.Contains(value) ||
-                                         p.LastName.Contains(value) ||
-                                         p.Patronymic.Contains(value)
+                query = query.Where(p => p.HouseNumber.Contains(value) ||
+                                         p.Street.Contains(value) ||
+                                         p.Additional.Contains(value) ||
+                                         p.District.Contains(value) ||
+                                         p.City.Contains(value) ||
+                                         p.Region.Contains(value)
                                    );
             }
 

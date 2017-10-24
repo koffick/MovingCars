@@ -50,3 +50,4 @@ D:\Develop\MovingCars\MovingCars\bin\DataTables.Mvc.dll
 D:\Develop\MovingCars\MovingCars\bin\System.Linq.Dynamic.dll
 D:\Develop\MovingCars\MovingCars\bin\AutoMapper.dll
 D:\Develop\MovingCars\MovingCars\bin\AutoMapper.xml
+D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddAddress.resources
