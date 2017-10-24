@@ -46,3 +46,7 @@ D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.dll
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.pdb
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddDriver.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csproj.GenerateResource.Cache
+D:\Develop\MovingCars\MovingCars\bin\DataTables.Mvc.dll
+D:\Develop\MovingCars\MovingCars\bin\System.Linq.Dynamic.dll
+D:\Develop\MovingCars\MovingCars\bin\AutoMapper.dll
+D:\Develop\MovingCars\MovingCars\bin\AutoMapper.xml
