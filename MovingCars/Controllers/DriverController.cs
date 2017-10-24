@@ -4,8 +4,10 @@ using MovingCars.Mapping;
 using MovingCars.Models;
 using MovingCars.Models.ViewModel;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -13,7 +15,19 @@ namespace MovingCars.Controllers
 {
     public class DriverController : Controller
     {
-        StorageContext db = new StorageContext();
+        private StorageContext db;
+        private MapperConfiguration config;
+        private IMapper mapper;
+
+        public DriverController()
+        {
+            this.db = new StorageContext();
+            this.config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<DriverMapProfile>();
+            });
+            this.mapper = this.config.CreateMapper();
+        }
 
         // GET: Driver
         public ActionResult List()
@@ -60,13 +74,6 @@ namespace MovingCars.Controllers
             if (!ModelState.IsValid)
                 return View("_CreatePartial", driverVM);
 
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<DriverMapProfile>();
-            });
-
-            var mapper = config.CreateMapper();
-
             Driver driver = mapper.Map<DriverViewModel, Driver>(driverVM);
 
             db.Drivers.Add(driver);
@@ -80,6 +87,52 @@ namespace MovingCars.Controllers
             }
 
             return Content("success");
+        }
+
+        // GET: Asset/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var driver = db.Drivers.FirstOrDefault(x => x.Id == id);
+
+            DriverViewModel driverViewModel = mapper.Map<Driver, DriverViewModel>(driver);
+
+            if (Request.IsAjaxRequest())
+                return PartialView("_EditPartial", driverViewModel);
+            return View(driverViewModel);
+        }
+
+        // POST: Asset/Edit/5
+        [HttpPost]
+        public async Task<ActionResult> Edit(DriverViewModel driverVM)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", driverVM);
+            }
+
+            Driver driver = mapper.Map<DriverViewModel, Driver>(driverVM);
+
+            db.Drivers.Attach(driver);
+            db.Entry(driver).State = EntityState.Modified;
+            var task = db.SaveChangesAsync();
+            await task;
+
+            if (task.Exception != null)
+            {
+                ModelState.AddModelError("", "Unable to update the Asset");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return View(Request.IsAjaxRequest() ? "_EditPartial" : "Edit", driverVM);
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return Content("success");
+            }
+
+            return RedirectToAction("List");
+
         }
 
         private IQueryable<Driver> SearchAssets(IDataTablesRequest requestModel, IQueryable<Driver> query)

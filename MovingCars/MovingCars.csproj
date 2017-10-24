@@ -453,6 +453,7 @@
     <Content Include="Views\Development\Index.cshtml" />
     <Content Include="Views\Driver\List.cshtml" />
     <Content Include="Views\Driver\_CreatePartial.cshtml" />
+    <Content Include="Views\Driver\_EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

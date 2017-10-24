@@ -13,6 +13,7 @@ namespace MovingCars.Mapping
         public DriverMapProfile()
         {
             CreateMap<DriverViewModel, Driver>();
+            CreateMap<Driver, DriverViewModel>();
         }
     }
 }

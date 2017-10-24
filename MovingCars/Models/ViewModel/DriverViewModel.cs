@@ -8,6 +8,8 @@ namespace MovingCars.Models.ViewModel
 {
     public class DriverViewModel
     {
+        public int Id { get; set; }
+
         [StringLength(255)]
         [Display(Name = "Имя")]
         [Required(ErrorMessage = "Имя - обязательно для ввода")]
