@@ -166,7 +166,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\EntityMapProfile.cs" />
-    <Compile Include="Mapping\DriverMapProfile.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.Designer.cs">
       <DependentUpon>201710230753340_AddDriver.cs</DependentUpon>
