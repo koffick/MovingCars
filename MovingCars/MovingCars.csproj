@@ -476,6 +476,8 @@
     <Content Include="Views\_ListPartialView.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\_ScriptPartialView.cshtml" />
+    <Content Include="Views\Passenger\_CreatePartial.cshtml" />
+    <Content Include="Views\Passenger\_EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
