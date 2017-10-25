@@ -162,6 +162,7 @@
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\PassengerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,11 +175,17 @@
     <Compile Include="Migrations\201710240551422_AddAddress.Designer.cs">
       <DependentUpon>201710240551422_AddAddress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710241213442_AddPassenger.cs" />
+    <Compile Include="Migrations\201710241213442_AddPassenger.Designer.cs">
+      <DependentUpon>201710241213442_AddPassenger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Driver.cs" />
+    <Compile Include="Models\Passenger.cs" />
     <Compile Include="Models\ViewModel\AddressViewModel.cs" />
     <Compile Include="Models\ViewModel\DriverViewModel.cs" />
+    <Compile Include="Models\ViewModel\PassengerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StorageContext.cs" />
   </ItemGroup>
@@ -465,11 +472,14 @@
     <Content Include="Views\Address\List.cshtml" />
     <Content Include="Views\Address\_CreatePartial.cshtml" />
     <Content Include="Views\Address\_EditPartial.cshtml" />
+    <Content Include="Views\Passenger\List.cshtml" />
+    <Content Include="Views\_ListPartialView.cshtml" />
+    <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\_ScriptPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Фввкуы\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -490,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710240551422_AddAddress.resx">
       <DependentUpon>201710240551422_AddAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710241213442_AddPassenger.resx">
+      <DependentUpon>201710241213442_AddPassenger.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

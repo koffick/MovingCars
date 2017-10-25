@@ -1,0 +1,116 @@
+﻿<script type="text/javascript">
+
+    var assetListVM;
+    $(function () {
+        assetListVM = {
+            dt: null,
+
+            init: function () {
+                dt = $('#data-table').DataTable({
+                    "serverSide": true,
+                    "processing": true,
+                    "ajax": {
+                        "url": "@ViewBag.GetUrl",
+                        "data": function (data) {
+                        }
+                    },
+                    "columns": [
+                        @Html.Raw(@ViewBag.Columns),
+                        {
+                            "width": "10",
+                            "data": "Id",
+                            "searchable": false,
+                            "sortable": false,
+                            "render": function (data, type, full, meta) {
+                                return '<a href="@ViewBag.UpdateUrl?id=' + data + '" class="editEntity" title="Изменить"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
+                            }
+                        }
+                    ],
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Все"]
+                    ],
+                    "language": {
+                        "emptyTable": "Нет данных",
+                        "info": "Показано с _START_ по _END_ из _TOTAL_",
+                        "infoEmpty": "Показано с 0 по 0 из 0",
+                        "lengthMenu": "Показывать по _MENU_",
+                        "loadingRecords": "Загрузка...",
+                        "processing": "Отбор данных...",
+                        "search": "Поиск:",
+                        "paginate": {
+                            "first": "Первая",
+                            "last": "Последняя",
+                            "next": "Следующая",
+                            "previous": "Предыдущая"
+                        },
+                        "aria": {
+                            "sortAscending": ": activate to sort column ascending",
+                            "sortDescending": ": activate to sort column descending"
+                        }
+                    }
+                });
+            },
+            refresh: function () {
+                dt.ajax.reload();
+            }
+        }
+
+        // initialize the datatables
+        assetListVM.init();
+
+        $("#btnCreate").on("click", function () {
+
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $('#createContainer').html(data);
+
+                $('#createModal').modal('show');
+            });
+
+        });
+
+        $('#data-table').on("click", ".editEntity", function (event) {
+
+            event.preventDefault();
+
+            var url = $(this).attr("href");
+
+            $.get(url, function (data) {
+                $('#editContainer').html(data);
+
+                $('#editModal').modal('show');
+            });
+
+        });
+    });
+
+
+        /**** Create Entity Ajax Form CallBack ********/
+
+        function CreateEntitySuccess(data) {
+
+            if (data != "success") {
+                $('#createContainer').html(data);
+                return;
+            }
+            $('#createModal').modal('hide');
+            $('#createContainer').html("");
+            assetListVM.refresh();
+
+        }
+
+        /**** Edit Entity Ajax Form CallBack ********/
+
+        function UpdateEntitySuccess(data) {
+
+            if (data != "success") {
+                $('#editContainer').html(data);
+                return;
+            }
+            $('#editModal').modal('hide');
+            $('#editContainer').html("");
+            assetListVM.refresh();
+
+        }
+
+</script>

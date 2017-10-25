@@ -21,7 +21,6 @@ namespace MovingCars.Controllers
             : base()
         {
             base.entities = base.db.Addresses;
-
         }
 
          protected override IQueryable<Address> Searching(string value, IQueryable<Address> query)

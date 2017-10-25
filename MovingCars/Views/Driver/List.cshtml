@@ -1,159 +1,18 @@
 ﻿@{
     ViewBag.Title = "Водители";
+    ViewBag.Columns = "{ \"title\": \"ID\", \"data\": \"Id\", \"sortable\": false },"+
+                        "{ \"title\": \"Фамилия\", \"data\": \"LastName\", \"searchable\": true, \"sortable\": true }," +
+                        "{ \"title\": \"Имя\", \"data\": \"FirstName\", \"searchable\": true, \"sortable\": false }," +
+                        "{ \"title\": \"Отчество\", \"data\": \"Patronymic\", \"searchable\": true, \"sortable\": false }," +
+                        "{ \"title\": \"Позывной\", \"data\": \"Call\", \"sortable\": false }," +
+                        "{ \"title\": \"Телефон\", \"data\": \"Phone\", \"sortable\": false }";
 }
 
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@Html.Partial("~/Views/_ListPartialView.cshtml")
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary list-panel" id="list-panel">
-            <div class="panel-heading list-panel-heading">
-                <button type="button" class="btn btn-default btn-md" data-toggle="modal" data-url="@Url.Action("Create","Driver")" id="btnCreateDriver">
-                    <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span> Добавить
-                </button>
-            </div>
-            <div class="panel-body">
-                <table id="drivers-data-table"
-                       class="table table-striped table-bordered"
-                       style="width:100%"></table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="createDriverModal" tabindex="-1" role="dialog" aria-labelledby="CreateDriverModal" aria-hidden="true" data-backdrop="static">
-    <div id="createDriverContainer">
-    </div>
-</div>
-
-<div class="modal fade" id="editDriverModal" tabindex="-1" role="dialog" aria-labelledby="EditDriverModal" aria-hidden="true" data-backdrop="static">
-    <div id="editDriverContainer">
-    </div>
-</div>
 
 @section Scripts
 {
-    <script type="text/javascript">
-
-    var assetListVM;
-    $(function () {
-        assetListVM = {
-            dt: null,
-
-            init: function () {
-                dt = $('#drivers-data-table').DataTable({
-                    "serverSide": true,
-                    "processing": true,
-                    "ajax": {
-                        "url": "@Url.Action("Get","Driver")",
-                        "data": function (data) {
-                        }
-                    },
-                    "columns": [
-                        { "title": "ID", "data": "Id", "sortable": false },
-                        { "title": "Фамилия", "data": "LastName", "searchable": true, "sortable": true },
-                        { "title": "Имя", "data": "FirstName", "searchable": true, "sortable": false },
-                        { "title": "Отчество", "data": "Patronymic", "searchable": true, "sortable": false },
-                        { "title": "Позывной", "data": "Call", "sortable": false },
-                        { "title": "Телефон", "data": "Phone", "sortable": false },
-                        {
-                            "width": "10",
-                            "data": "Id",
-                            "searchable": false,
-                            "sortable": false,
-                            "render": function (data, type, full, meta) {
-                                return '<a href="@Url.Action("Edit","Driver")?id=' + data + '" class="editDriver" title="Изменить"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> ';
-                            }
-                        }
-                    ],
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Все"]
-                    ],
-                    "language": {
-                        "emptyTable": "Нет данных",
-                        "info": "Показано с _START_ по _END_ из _TOTAL_",
-                        "infoEmpty": "Показано с 0 по 0 из 0",
-                        "lengthMenu": "Показывать по _MENU_",
-                        "loadingRecords": "Загрузка...",
-                        "processing": "Отбор данных...",
-                        "search": "Поиск:",
-                        "paginate": {
-                            "first": "Первая",
-                            "last": "Последняя",
-                            "next": "Следующая",
-                            "previous": "Предыдущая"
-                        },
-                        "aria": {
-                            "sortAscending": ": activate to sort column ascending",
-                            "sortDescending": ": activate to sort column descending"
-                        }
-                    }
-                });
-            },
-            refresh: function () {
-                dt.ajax.reload();
-            }
-        }
-
-        // initialize the datatables
-        assetListVM.init();
-
-        $("#btnCreateDriver").on("click", function () {
-
-            var url = $(this).data("url");
-
-            $.get(url, function (data) {
-                $('#createDriverContainer').html(data);
-
-                $('#createDriverModal').modal('show');
-            });
-
-        });
-
-        $('#drivers-data-table').on("click", ".editDriver", function (event) {
-
-            event.preventDefault();
-
-            var url = $(this).attr("href");
-
-            $.get(url, function (data) {
-                $('#editDriverContainer').html(data);
-
-                $('#editDriverModal').modal('show');
-            });
-
-        });
-    });
-
-
-        /**** Create Asset Ajax Form CallBack ********/
-
-        function CreateDriverSuccess(data) {
-
-            if (data != "success") {
-                $('#createDriverContainer').html(data);
-                return;
-            }
-            $('#createDriverModal').modal('hide');
-            $('#createDriverContainer').html("");
-            assetListVM.refresh();
-
-        }
-
-        /**** Edit Asset Ajax Form CallBack ********/
-
-        function UpdateDriverSuccess(data) {
-
-            if (data != "success") {
-                $('#editDriverContainer').html(data);
-                return;
-            }
-            $('#editDriverModal').modal('hide');
-            $('#editDriverContainer').html("");
-            assetListVM.refresh();
-
-        }
-
-    </script>
+@Html.Partial("~/Views/_ScriptPartialView.cshtml")
 }
 

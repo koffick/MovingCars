@@ -9,7 +9,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title">Новый водитель</h4>
         </div>
-        @using (Ajax.BeginForm("Create", "Driver", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateDriverSuccess" }, new { @class = "form-horizontal", role = "form" }))
+        @using (Ajax.BeginForm("Create", "Driver", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "CreateEntitySuccess" }, new { @class = "form-horizontal", role = "form" }))
         {
             <div class="modal-body">
                 <div class="form-horizontal">

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Пассажиры";
+    ViewBag.Columns = "{ \"title\": \"ID\", \"data\": \"Id\", \"sortable\": false }," +
+                        "{ \"title\": \"Фамилия\", \"data\": \"LastName\", \"searchable\": true, \"sortable\": true }," +
+                        "{ \"title\": \"Имя\", \"data\": \"FirstName\", \"searchable\": true, \"sortable\": false }," +
+                        "{ \"title\": \"Отчество\", \"data\": \"Patronymic\", \"searchable\": true, \"sortable\": false }," +
+                        "{ \"title\": \"Телефон\", \"data\": \"Phone\", \"sortable\": false }," +
+                        "{ \"title\": \"Место работы\", \"data\": \"Department\", \"sortable\": false }," +
+                        "{ \"title\": \"Должность\", \"data\": \"Position\", \"sortable\": false }"; 
+}
+
+@Html.Partial("~/Views/_ListPartialView.cshtml")
+
+
+@section Scripts
+{
+    @Html.Partial("~/Views/_ScriptPartialView.cshtml")
+}

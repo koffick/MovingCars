@@ -35,7 +35,10 @@ namespace MovingCars.Controllers
 
         public ActionResult List()
         {
-            ViewBag.Message = "Справочник адресов, с возможностью редактирования.";
+            ViewBag.Message = "Справочник, с возможностью редактирования.";
+            ViewBag.GetUrl = "/" + typeof(TEntity).Name + "/Get";
+            ViewBag.CreateUrl = "/"+typeof(TEntity).Name + "/Create";
+            ViewBag.UpdateUrl = "/" + typeof(TEntity).Name + "/Edit";
             return View(entities.ToList());
         }
 
