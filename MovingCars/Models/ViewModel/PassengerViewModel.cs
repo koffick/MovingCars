@@ -21,10 +21,10 @@ namespace MovingCars.Models.ViewModel
         [StringLength(255)]
         [Display(Name = "Отчество")]
         public string Patronymic { get; set; }
-        [StringLength(20)]
+        [StringLength(100)]
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
-        [StringLength(255)]
+        [StringLength(500)]
         [Display(Name = "Место работы")]
         public string Department { get; set; }
         [StringLength(255)]

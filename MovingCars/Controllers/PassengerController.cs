@@ -24,5 +24,22 @@ namespace MovingCars.Controllers
                               );
             return query;
         }
+
+        [HttpGet]
+        public ActionResult LoadDataFromAD()
+        {
+            var users = GroupHelper.GetGroupFIOUsers("TMN\\Пользователи домена");
+            foreach (var item in users)
+            {
+                if (base.entities.Where(w => w.Department == item.Department && w.FirstName == item.FirstName && w.LastName == item.LastName && w.Patronymic == item.Patronymic).FirstOrDefault() == null)
+                {
+                    base.entities.Add(item);
+                    db.SaveChanges();
+                }
+
+            }
+
+            return RedirectToAction("List");
+        }
     }
 }

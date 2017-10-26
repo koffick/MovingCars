@@ -17,9 +17,9 @@ namespace MovingCars.Models
         public string LastName { get; set; }
         [StringLength(255)]
         public string Patronymic { get; set; }
-        [StringLength(20)]
+        [StringLength(100)]
         public string Phone { get; set; }
-        [StringLength(255)]
+        [StringLength(500)]
         public string Department { get; set; }
         [StringLength(255)]
         public string Position { get; set; }

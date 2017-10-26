@@ -69,6 +69,18 @@
 
         });
 
+        $("#btnCreate").on("click", function () {
+
+            var url = $(this).data("url");
+
+            $.get(url, function (data) {
+                $('#createContainer').html(data);
+
+                $('#createModal').modal('show');
+            });
+
+        });
+
         $('#data-table').on("click", ".editEntity", function (event) {
 
             event.preventDefault();
