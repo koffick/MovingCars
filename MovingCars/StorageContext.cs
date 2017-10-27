@@ -16,5 +16,6 @@ namespace MovingCars
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Passenger> Passengers { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

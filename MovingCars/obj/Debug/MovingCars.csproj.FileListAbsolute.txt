@@ -53,3 +53,4 @@ D:\Develop\MovingCars\MovingCars\bin\AutoMapper.xml
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddAddress.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddPassenger.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.UpdPassenger.resources
+D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddOrder.resources

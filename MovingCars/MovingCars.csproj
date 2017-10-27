@@ -159,6 +159,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseGenericController.cs" />
     <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\GroupHelper.cs" />
@@ -170,6 +171,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\EntityMapProfile.cs" />
+    <Compile Include="Mapping\OrderMapProfile.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.cs" />
     <Compile Include="Migrations\201710230753340_AddDriver.Designer.cs">
       <DependentUpon>201710230753340_AddDriver.cs</DependentUpon>
@@ -185,6 +187,10 @@
     <Compile Include="Migrations\201710260602163_UpdPassenger.cs" />
     <Compile Include="Migrations\201710260602163_UpdPassenger.Designer.cs">
       <DependentUpon>201710260602163_UpdPassenger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710261000434_AddOrder.cs" />
+    <Compile Include="Migrations\201710261000434_AddOrder.Designer.cs">
+      <DependentUpon>201710261000434_AddOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
@@ -518,6 +524,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710260602163_UpdPassenger.resx">
       <DependentUpon>201710260602163_UpdPassenger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710261000434_AddOrder.resx">
+      <DependentUpon>201710261000434_AddOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

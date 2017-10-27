@@ -9,10 +9,18 @@ namespace MovingCars.Models.ViewModel
     public class OrderViewModel
     {
         [Display(Name = "Начало поездки")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Time)]
+        public DateTime StartTime { get; set; }
 
         [Display(Name = "Завершение поездки")]
-        public DateTime EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Time)]
+        public DateTime? EndTime { get; set; }
 
         [Display(Name = "Адрес подачи")]
         public string StartAddress { get; set; }
