@@ -8,6 +8,8 @@ namespace MovingCars.Models.ViewModel
 {
     public class OrderViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Начало поездки")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }

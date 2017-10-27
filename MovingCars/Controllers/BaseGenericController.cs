@@ -15,27 +15,39 @@ using System.Net;
 
 namespace MovingCars.Controllers
 {
-    public class BaseGenericController<TEntity, TView, TTypeId> : BaseMapController where TEntity: class
+    public class BaseGenericController<TEntity, TView, TTypeId> : BaseMapController where TEntity : class
     {
         protected string titleMessage = "";
         protected DbSet<TEntity> entities;
 
 
         public BaseGenericController()
-            :base(new EntityMapProfile<TView, TEntity>())
+            : base(new EntityMapProfile<TView, TEntity>())
         {
+            Init();
+        }
+
+        public BaseGenericController(Profile profile)
+            : base(profile)
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            ViewBag.Message = "Справочник, с возможностью редактирования.";
+            ViewBag.GetUrl = "/" + typeof(TEntity).Name + "/Get";
+            ViewBag.CreateUrl = "/" + typeof(TEntity).Name + "/Create";
+            ViewBag.UpdateUrl = "/" + typeof(TEntity).Name + "/Edit";
+
         }
 
         public ActionResult List()
         {
-            ViewBag.Message = "Справочник, с возможностью редактирования.";
-            ViewBag.GetUrl = "/" + typeof(TEntity).Name + "/Get";
-            ViewBag.CreateUrl = "/"+typeof(TEntity).Name + "/Create";
-            ViewBag.UpdateUrl = "/" + typeof(TEntity).Name + "/Edit";
             return View(entities.ToList());
         }
 
-        public ActionResult Get([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
+        public virtual ActionResult Get([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
             IQueryable<TEntity> query = this.entities;
             var totalCount = query.Count();
@@ -56,7 +68,7 @@ namespace MovingCars.Controllers
         }
 
         // GET: Asset/Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             var model = Activator.CreateInstance(typeof(TView));
             return View("_CreatePartial", model);
@@ -64,7 +76,7 @@ namespace MovingCars.Controllers
 
         //POST: Asset/Create
         [HttpPost]
-        public async Task<ActionResult> Create(TView entityVM)
+        public virtual async Task<ActionResult> Create(TView entityVM)
         {
             if (!ModelState.IsValid)
                 return View("_CreatePartial", entityVM);
@@ -85,7 +97,7 @@ namespace MovingCars.Controllers
         }
 
         // GET: Asset/Edit/5
-        public ActionResult Edit(TTypeId id)
+        public virtual ActionResult Edit(TTypeId id)
         {
             ParameterExpression parameter = Expression.Parameter(typeof(TEntity), "x");
             var expr = Expression.Property(parameter, "Id");
@@ -103,7 +115,7 @@ namespace MovingCars.Controllers
 
         // POST: Asset/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(TView entityVM)
+        public virtual async Task<ActionResult> Edit(TView entityVM)
         {
 
             if (!ModelState.IsValid)
@@ -135,7 +147,7 @@ namespace MovingCars.Controllers
 
         }
 
-        private IQueryable<TEntity> SearchEntities(IDataTablesRequest requestModel, IQueryable<TEntity> query)
+        protected IQueryable<TEntity> SearchEntities(IDataTablesRequest requestModel, IQueryable<TEntity> query)
         {
 
             // Apply filters

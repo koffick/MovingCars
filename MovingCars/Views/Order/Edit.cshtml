@@ -1,7 +1,7 @@
 ﻿@model MovingCars.Models.ViewModel.OrderViewModel
 
 @{
-    ViewBag.Title = "Новый заказ";
+    ViewBag.Title = "Изменение заказа";
 }
 <link href='@Url.Content("~/Content/themes/base/jquery-ui.css")' rel="stylesheet" type="text/css" />
 <h2>@ViewBag.Title.</h2>
@@ -11,6 +11,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.HiddenFor(model => model.Id)
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                 @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", type = "time" } })
@@ -119,16 +120,14 @@
     <script src='@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")' type="text/javascript"></script>
 
     <script type="text/javascript">
-        $(function () {
-            $("[dataautocompletesource]").each(function () {
-                var target = $(this);
-                target.autocomplete({
-                    source: target.attr("dataautocompletesource"),
-                    delay: 800,
-                    minLength: 3
-                });
+    $(function () {
+        $("[dataautocompletesource]").each(function () {
+            var target = $(this);
+            target.autocomplete({
+                source: target.attr("dataautocompletesource")
             });
         });
+    });
     </script>
 
 
