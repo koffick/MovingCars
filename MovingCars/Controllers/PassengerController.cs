@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MovingCars.Controllers
 {
-    public class PassengerController : BaseController<Passenger, PassengerViewModel, int>
+    public class PassengerController : BaseGenericController<Passenger, PassengerViewModel, int>
     {
         public PassengerController()
             : base()

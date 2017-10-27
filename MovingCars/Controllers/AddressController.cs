@@ -15,7 +15,7 @@ using System.Web.Mvc;
 
 namespace MovingCars.Controllers
 {
-     public class AddressController : BaseController<Address, AddressViewModel, string>
+     public class AddressController : BaseGenericController<Address, AddressViewModel, string>
     {
         public AddressController()
             : base()

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MovingCars.Controllers
 {
-    public class OrderController : BaseGenericController
+    public class OrderController : BaseMapController
     {
         public OrderController()
             :base(new OrderMapProfile())
@@ -19,7 +19,7 @@ namespace MovingCars.Controllers
         }
 
         // GET: Order
-        public ActionResult Index()
+        public ActionResult List()
         {
             return View();
         }
@@ -44,17 +44,25 @@ namespace MovingCars.Controllers
             await task;
 
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("List", "Order");
         }
 
-        public ActionResult AutocompleteSearch(string term)
+        public ActionResult PassengerAutocompleteSearch(string term)
         {
             var models = this.db.Passengers.Where(a => a.LastName.Contains(term))
                             .Select(a => new { value = a.LastName + " "  + a.FirstName + " " + a.Patronymic})
-                            .Distinct();
+                            .Distinct().Take(10);
 
             return Json(models, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DriverAutocompleteSearch(string term)
+        {
+            var models = this.db.Drivers.Where(a => a.LastName.Contains(term))
+                            .Select(a => new { value = a.LastName + " " + a.FirstName + " " + a.Patronymic })
+                            .Distinct().Take(10);
+
+            return Json(models, JsonRequestBehavior.AllowGet);
+        }
     }
 }

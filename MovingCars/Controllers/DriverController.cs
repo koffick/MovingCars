@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace MovingCars.Controllers
 {
-    public class DriverController : BaseController<Driver, DriverViewModel, int>
+    public class DriverController : BaseGenericController<Driver, DriverViewModel, int>
     {
         public DriverController()
             : base()

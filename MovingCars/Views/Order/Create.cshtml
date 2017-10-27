@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Новый заказ";
 }
+<link href='@Url.Content("~/Content/themes/base/jquery-ui.css")' rel="stylesheet" type="text/css" />
 <h2>@ViewBag.Title.</h2>
 <h3>Оформление поездки.</h3>
 @using (Html.BeginForm())
@@ -53,18 +54,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Passenger, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Passenger, new { htmlAttributes = new { @class = "form-control", @dataautocompletesource = @Url.Action("AutocompleteSearch", "Home") } })*@
+                @Html.EditorFor(model => model.Passenger, new { htmlAttributes = new { @class = "form-control", @dataautocompletesource = @Url.Action("PassengerAutocompleteSearch", "Order"),
+               @placeholder = "Введите фамилию пассажира" } })
                 @Html.ValidationMessageFor(model => model.Passenger, "", new { @class = "text-danger" })
-                <input type="text" name="name" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Order")"
-                       class="form-control"
-                       placeholder="Поиск по поставщикам" />
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Driver, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Driver, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Driver, new { htmlAttributes = new { @class = "form-control", @dataautocompletesource = @Url.Action("DriverAutocompleteSearch", "Order"),
+               @placeholder = "Введите фамилию водителя" } })
                 @Html.ValidationMessageFor(model => model.Driver, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -81,18 +81,25 @@
     <div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="button" class="btn btn-default">Закрыть</button>
+                <a class="btn btn-default" href="/Order/List">Перейти к списку</a>
                 <input type="submit" class="btn btn-primary" value="Сохранить" />
             </div>
         </div>
     </div>
 
+    <script src='@Url.Content("~/Scripts/jquery-1.10.2.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")' type="text/javascript"></script>
+
     <script type="text/javascript">
     $(function () {
-        $("[data-autocomplete-source]").each(function () {
+        $("[dataautocompletesource]").each(function () {
             var target = $(this);
-            target.autocomplete({ source: target.attr("data-autocomplete-source") });
+            target.autocomplete({
+                source: target.attr("dataautocompletesource")
+            });
         });
     });
     </script>
+
+
 }
