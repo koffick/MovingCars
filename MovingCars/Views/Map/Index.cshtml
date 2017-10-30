@@ -1,0 +1,107 @@
+﻿@model MovingCars.Models.Driver
+
+@{
+    ViewBag.Title = "Поиск автомобиля";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@*<img src="@Url.Action("RenderImage", "Map")" />*@
+
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6" id="myMap" style="width: 500px; height: 500px;"></div>
+        <div class="col-lg-6 col-md-6">
+            <div class="row">
+                @Html.DropDownList("driverSelector", (SelectList)ViewBag.CustomerID, "выберите водителя")
+            </div>
+            <div class="row">
+                <button id="mapPoint">Местоположение</button>
+                <p id="placement"> </p>
+            </div>
+            <div class="row">
+                <button id="mapLine">маршрут</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        ymaps.ready(init);
+
+        function init() {
+            var myMap = new ymaps.Map('myMap', {
+                center: [57.15, 65.5],
+                zoom: 12
+            });
+
+            var myCollection = new ymaps.GeoObjectCollection({}, {
+                preset: 'twirl#blueIcon', //все метки красные
+                draggable: true // и их можно перемещать
+            });
+            var lastObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'twirl#redIcon', //все метки красные
+                draggable: true // и их можно перемещать
+            });
+
+            myMap.controls
+                // Кнопка изменения масштаба
+                .add('zoomControl')
+
+            myMap.geoObjects.add(myCollection);
+            myMap.geoObjects.add(lastObjects);
+
+            var driverSelect = $("driverSelector");
+
+            $("#mapLine").on("click", function () {
+
+                $.ajax({
+                    url: "/Map/GetTrack",
+                    data: "id=" + $("#driverSelector").val(),
+                }).done(function (data) {
+                    myCollection.add(new ymaps.Polyline(data.value));
+                });
+            });
+
+            $("#mapPoint").on("click", function () {
+
+                $.ajax({
+                    url: "/Map/GetPoint",
+                    data: "id=" + $("#driverSelector").val(),
+                }).done(function (data) {
+                    document.getElementById('placement').innerHTML = "";
+                    myMap.setCenter(data.value, myMap.zoom);
+                    myCollection.removeAll();
+                    lastObjects.removeAll();
+                    lastObjects.add(new ymaps.Placemark(data.value));
+                    ymaps.geocode(data.value, { kind: 'house' }).then(function (res) {
+                        var firstGeoObject = res.geoObjects.get(0);
+                        console.log(firstGeoObject.properties._O.metaDataProperty.GeocoderMetaData.text);
+                        document.getElementById('placement').innerHTML = firstGeoObject.properties._O.metaDataProperty.GeocoderMetaData.text;
+                    });
+                });
+            });
+
+            $("#driverSelector").on("change", function () {
+
+                $.ajax({
+                    url: "/Map/GetPoint",
+                    data: "id=" + $("#driverSelector").val(),
+                }).done(function (data) {
+                    myMap.setCenter(data.value, myMap.zoom);
+                    lastObjects.each(function (geoObject, i) {
+                        myCollection.add(geoObject);
+                    });
+                    lastObjects.add(new ymaps.Placemark(data.value));
+                    document.getElementById('placement').innerHTML = "";
+                });
+            });
+        }
+
+    </script>
+}

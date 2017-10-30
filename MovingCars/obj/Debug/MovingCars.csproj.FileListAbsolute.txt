@@ -54,3 +54,5 @@ D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddAddress.reso
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddPassenger.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.UpdPassenger.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddOrder.resources
+D:\Develop\MovingCars\MovingCars\bin\YandexAPI.dll
+D:\Develop\MovingCars\MovingCars\bin\YandexAPI.pdb

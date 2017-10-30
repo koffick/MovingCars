@@ -127,6 +127,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="YandexAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Test\YandexAPI\YandexAPI\bin\Debug\YandexAPI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -165,6 +169,7 @@
     <Compile Include="Controllers\GroupHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PassengerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -560,6 +565,7 @@
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Map\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
