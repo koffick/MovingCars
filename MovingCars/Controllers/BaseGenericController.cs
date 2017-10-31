@@ -63,7 +63,7 @@ namespace MovingCars.Controllers
             }
             var data = query.Select(s => s).ToList();
 
-            return Json(new DataTablesResponse(requestModel.Draw, data, totalCount, totalCount), JsonRequestBehavior.AllowGet);
+            return Json(new DataTablesResponse(requestModel.Draw, data, filteredCount, totalCount), JsonRequestBehavior.AllowGet);
 
         }
 
