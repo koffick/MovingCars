@@ -3,11 +3,11 @@
     ViewBag.Title = "Список заказов";
     ViewBag.Columns = 
                     "{ \"title\": \"Начало\", \"data\": \"StartDate\", \"searchable\": true, \"sortable\": true }," +
-                    "{ \"title\": \"Окончание\", \"data\": \"EndDate\", \"searchable\": true, \"sortable\": false }," +
+                    "{ \"title\": \"Окончание\", \"data\": \"EndDate\", \"searchable\": true, \"sortable\": true }," +
                     "{ \"title\": \"Адрес отправления\", \"data\": \"StartAddress\", \"searchable\": true, \"sortable\": false }," +
                     "{ \"title\": \"Адрес прибытия\", \"data\": \"EndAddress\", \"sortable\": false }," +
-                    "{ \"title\": \"Пассажир\", \"data\": \"Passenger\", \"sortable\": false }," +
-                    "{ \"title\": \"Водитель\", \"data\": \"Driver\", \"sortable\": false }";
+                    "{ \"title\": \"Пассажир\", \"data\": \"Passenger\", \"sortable\": true }," +
+                    "{ \"title\": \"Водитель\", \"data\": \"Driver\", \"sortable\": true }";
 }
 
 <h2>@ViewBag.Title.</h2>

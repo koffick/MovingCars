@@ -40,7 +40,6 @@ D:\Develop\MovingCars\MovingCars\bin\Microsoft.AI.DependencyCollector.xml
 D:\Develop\MovingCars\MovingCars\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\Develop\MovingCars\MovingCars\bin\Microsoft.AI.WindowsServer.xml
 D:\Develop\MovingCars\MovingCars\bin\Microsoft.AI.Web.xml
-D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csprojResolveAssemblyReference.cache
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csproj.CoreCompileInputs.cache
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.dll
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.pdb
@@ -56,3 +55,4 @@ D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.UpdPassenger.re
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddOrder.resources
 D:\Develop\MovingCars\MovingCars\bin\YandexAPI.dll
 D:\Develop\MovingCars\MovingCars\bin\YandexAPI.pdb
+D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csprojResolveAssemblyReference.cache

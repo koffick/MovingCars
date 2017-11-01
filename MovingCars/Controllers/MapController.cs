@@ -36,9 +36,12 @@ namespace MovingCars.Controllers
        {
             Double[][] arr = new Double[][]
                 {
-                    new Double[]{ 57.15, 65.45 },
-                    new Double[]{ 57.2, 65.48 },
-                    new Double[]{ 57.12, 65.55 }
+                    new Double[]{ 57.1443, 65.5943 },
+                    new Double[]{ 57.1478, 65.5877 },
+                    new Double[]{ 57.1459, 65.582 },
+                    new Double[]{ 57.1561, 65.5617 },
+                    new Double[]{ 57.1487, 65.5502 },
+                    new Double[]{ 57.155, 65.5373 }
                 };
             return Json(new { value = arr}, JsonRequestBehavior.AllowGet);
         }

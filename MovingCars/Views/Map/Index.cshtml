@@ -11,7 +11,7 @@
 <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-md-6" id="myMap" style="width: 500px; height: 500px;"></div>
+        <div class="col-lg-6 col-md-6" id="myMap" style="width: 500px; height: 700px;"></div>
         <div class="col-lg-6 col-md-6">
             <div class="row">
                 @Html.DropDownList("driverSelector", (SelectList)ViewBag.CustomerID, "выберите водителя")
@@ -64,7 +64,7 @@
                     url: "/Map/GetTrack",
                     data: "id=" + $("#driverSelector").val(),
                 }).done(function (data) {
-                    myCollection.add(new ymaps.Polyline(data.value));
+                    myCollection.add(new ymaps.Polyline(data.value, { strokeWidth: 4}));
                 });
             });
 
