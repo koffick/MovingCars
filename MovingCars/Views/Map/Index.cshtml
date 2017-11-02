@@ -11,7 +11,9 @@
 <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-md-6" id="myMap" style="width: 500px; height: 700px;"></div>
+        <div class="col-lg-6 col-md-6" id="myMap" style="width: 1000px; height: 700px;"></div>
+    </div>
+    <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="row">
                 @Html.DropDownList("driverSelector", (SelectList)ViewBag.CustomerID, "выберите водителя")
@@ -37,7 +39,8 @@
         function init() {
             var myMap = new ymaps.Map('myMap', {
                 center: [57.15, 65.5],
-                zoom: 12
+                zoom: 12,
+                behaviors: ["drag","scrollZoom"]
             });
 
             var myCollection = new ymaps.GeoObjectCollection({}, {
@@ -49,10 +52,8 @@
                 draggable: true // и их можно перемещать
             });
 
-            myMap.controls
-                // Кнопка изменения масштаба
-                .add('zoomControl')
-
+            // Кнопка изменения масштаба
+            myMap.controls.add('zoomControl');
             myMap.geoObjects.add(myCollection);
             myMap.geoObjects.add(lastObjects);
 
@@ -64,7 +65,7 @@
                     url: "/Map/GetTrack",
                     data: "id=" + $("#driverSelector").val(),
                 }).done(function (data) {
-                    myCollection.add(new ymaps.Polyline(data.value, { strokeWidth: 4}));
+                    myCollection.add(new ymaps.Polyline(data.value, { hintContent: data.hint }, { strokeWidth: 4 }));
                 });
             });
 

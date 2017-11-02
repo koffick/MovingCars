@@ -43,7 +43,7 @@ namespace MovingCars.Controllers
                     new Double[]{ 57.1487, 65.5502 },
                     new Double[]{ 57.155, 65.5373 }
                 };
-            return Json(new { value = arr}, JsonRequestBehavior.AllowGet);
+            return Json(new { value = arr, hint = "Линия " + DateTime.Now.ToString()}, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPoint(int id)
