@@ -581,6 +581,7 @@
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
     <Content Include="Views\Map\Index.cshtml" />
+    <Content Include="Views\Order\_ModifyPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

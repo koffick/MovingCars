@@ -62,7 +62,7 @@ namespace MovingCars.Controllers
             {
                 query = query.Skip(requestModel.Start).Take(requestModel.Length);
             }
-            var data = query.ToList().Select(s => 
+            var data = query.Include(i => i.Driver).ToList().Select(s => 
             new
             {
                 Id = s.Id,
@@ -71,7 +71,7 @@ namespace MovingCars.Controllers
                 StartAddress = s.StartAddress,
                 EndAddress = s.EndAddress,
                 Passenger = s.Passenger,
-                Driver = s.Driver,
+                Driver = s.Driver != null ? s.Driver.LastName + " " + s.Driver.FirstName + " " + s.Driver.Patronymic : "",
                 Note = s.Note
             }).ToList();
 
@@ -199,7 +199,8 @@ namespace MovingCars.Controllers
             var val1 = Expression.Constant(id);
             Expression expression = Expression.Equal(expr, val1);
             var lambda = Expression.Lambda<Func<Order, bool>>(expression, new ParameterExpression[] { parameter });
-            Order address = entities.FirstOrDefault(lambda.Compile());
+            Order address = entities.Include(i => i.Driver).FirstOrDefault(lambda.Compile());
+
 
             OrderViewModel entityVM = mapper.Map<Order, OrderViewModel>(address);
 
