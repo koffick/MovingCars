@@ -91,7 +91,7 @@ namespace MovingCars.Controllers
         public ActionResult DriverAutocompleteSearch(string term)
         {
             var models = this.db.Drivers.Where(a => a.LastName.Contains(term))
-                            .Select(a => new { value = a.LastName + " " + a.FirstName + " " + a.Patronymic })
+                            .Select(a => new { label = a.LastName + " " + a.FirstName + " " + a.Patronymic, value = a.Id })
                             .Distinct().Take(10);
 
             return Json(models, JsonRequestBehavior.AllowGet);

@@ -37,7 +37,10 @@ namespace MovingCars.Models.ViewModel
         public string Passenger { get; set; }
 
         [Display(Name = "Водитель")]
+
         public string Driver { get; set; }
+        [Display(Name = "Идентификатор водителя")]
+        public int DriverId { get; set; }
 
         [Display(Name = "Комментарий")]
         public string Note { get; set; }

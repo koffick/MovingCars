@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201711011326362_AddPoint.Designer.cs">
       <DependentUpon>201711011326362_AddPoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711020623260_UpdOrder.cs" />
+    <Compile Include="Migrations\201711020623260_UpdOrder.Designer.cs">
+      <DependentUpon>201711020623260_UpdOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Driver.cs" />
@@ -613,6 +617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711011326362_AddPoint.resx">
       <DependentUpon>201711011326362_AddPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711020623260_UpdOrder.resx">
+      <DependentUpon>201711020623260_UpdOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
