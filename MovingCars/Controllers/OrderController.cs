@@ -2,6 +2,7 @@
 using MovingCars.Mapping;
 using MovingCars.Models;
 using MovingCars.Models.ViewModel;
+using suggestionscsharp;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -96,99 +97,26 @@ namespace MovingCars.Controllers
 
             return Json(models, JsonRequestBehavior.AllowGet);
         }
-       
+
+
         public ActionResult AddressAutocompleteSearch(string term)
         {
-            var strings = term.Trim().Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
-            if (strings.Length == 1)
-            {
-                strings = term.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            }
+            var mainFilter = "Тюмень ";
+            var token = "0426e29243b9b6e9445adecd9bf11cdc3f2b6997";
+            var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs";
+            var api = new SuggestClient(token, url);
+            var addresses = api.QueryAddress(mainFilter + term);
 
-            IQueryable<Address> query = this.db.Addresses;
-
-            if (strings.Length == 1)
-            {
-                query = SearchOne(query, strings[0]);
-            }
-            if (strings.Length == 2)
-            {
-                query = SearchTwo(query, strings);
-            }
-            if (strings.Length == 3)
-            {
-                query = SearchThree(query, strings);
-            }
-
-            var addresses = query.Select(a => new { value = a.District + ", " + a.City + ", " + a.Locality + ", " + a.Street + ", " + a.HouseNumber + ", " + a.Additional })
-                        .Distinct().Take(10).ToList();
             List<string> result = new List<string>();
-            foreach (var item in addresses)
+            foreach (var item in addresses.suggestions)
             {
-                var s = item.value.ToString().Replace(", ,", ",").Replace(", ,", ",").Replace(", ,", ",");
-                if (s.Substring(0, 2) == ", ")
-                {
-                    s = s.Substring(2, s.Length - 2);
-                }
-                if (s.Substring(s.Length - 2, 2) == ", ")
-                {
-                    s = s.Substring(0, s.Length - 2);
-                }
-                result.Add(s);
+                var region = item.data.region_with_type;
+                var str = item.value.Replace(region + ", ", "");
+                result.Add(str);
             }
 
             return Json(result,
                         JsonRequestBehavior.AllowGet);
-        }
-
-        private IQueryable<Address> SearchOne(IQueryable<Address> query, string term)
-        {
-            term = term.Trim();
-            return query.Where(a => a.City.Contains(term) || a.Locality.Contains(term) || a.Street.Contains(term) || a.HouseNumber.Contains(term));
-        }
-
-        private IQueryable<Address> SearchTwo(IQueryable<Address> query, string[] terms)
-        {
-            var s1 = terms[0].Trim();
-            var s2 = terms[1].Trim();
-
-            int n;
-            if (int.TryParse(s1, out n) || int.TryParse(s2, out n))
-            {
-                return query.Where(a => a.Street.Contains(s1) && (a.Street.Contains(s2) || (a.HouseNumber.Contains(s2))));
-            }
-            else
-            {
-                var q = query.Where(a =>
-                    (a.City.Contains(s1) || a.Locality.Contains(s1) || a.Street.Contains(s1) || a.HouseNumber.Contains(s1))
-                    &&
-                    (a.City.Contains(s2) || a.Locality.Contains(s2) || a.Street.Contains(s2) || a.HouseNumber.Contains(s2))
-                    );
-                return q;
-            }
-        }
-
-        private IQueryable<Address> SearchThree(IQueryable<Address> query, string[] terms)
-        {
-            var s1 = terms[0].Trim();
-            var s2 = terms[1].Trim();
-            var s3 = terms[2].Trim();
-
-            int n;
-            if (int.TryParse(s1, out n) && int.TryParse(s2, out n) && int.TryParse(s2, out n))
-            {
-                return query.Where(a => a.Street.Contains(s1) && (a.HouseNumber.Contains(s2)) && (a.Additional.Contains(s3)));
-            }
-            else
-            {
-                return query.Where(a =>
-                    (a.City.Contains(s1) || a.Locality.Contains(s1) || a.Street.Contains(s1) || a.HouseNumber.Contains(s1) || a.Additional.Contains(s1))
-                    &&
-                    (a.City.Contains(s2) || a.Locality.Contains(s2) || a.Street.Contains(s2) || a.HouseNumber.Contains(s2) || a.Additional.Contains(s2))
-                    &&
-                    (a.City.Contains(s3) || a.Locality.Contains(s3) || a.Street.Contains(s3) || a.HouseNumber.Contains(s3) || a.Additional.Contains(s3))
-                    );
-            }
         }
 
         // GET: Asset/Edit/5
