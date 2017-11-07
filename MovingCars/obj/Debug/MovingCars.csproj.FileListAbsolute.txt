@@ -61,3 +61,7 @@ D:\Develop\MovingCars\MovingCars\bin\RestSharp.dll
 D:\Develop\MovingCars\MovingCars\bin\nunit.framework.dll
 D:\Develop\MovingCars\MovingCars\bin\suggestions-csharp.pdb
 D:\Develop\MovingCars\MovingCars\bin\nunit.framework.xml
+D:\Develop\MovingCars\MovingCars\bin\DocumentFormat.OpenXml.dll
+D:\Develop\MovingCars\MovingCars\bin\System.IO.FileSystem.Primitives.dll
+D:\Develop\MovingCars\MovingCars\bin\System.IO.Packaging.dll
+D:\Develop\MovingCars\MovingCars\bin\DocumentFormat.OpenXml.xml

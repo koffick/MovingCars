@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Формирование отчетов учета времени водителей.</h2>
+
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="form-horizontal">
+    <div class="row">
+        <div class="form-group col-md-6">
+            Водители
+            <div id="listContainer" style="height: 600px; overflow: auto;">
+                </br>
+                <ul id="ulDrivers" class="demo">
+                    @foreach (var b in (SelectList)ViewBag.Drivers)
+                    {
+                        <li id="@b.Value" class="driver">@b.Text</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            Период
+            <div>
+                </br>
+                @Html.Label("С ", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("startPeriod", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                </div>
+                @Html.Label("по ", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("endPeriod", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div>
+                <button type="button" class="btn btn-default">Сформировать</button>
+                <p>@Html.ActionLink("Export to XML", "Export")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(".demo").simsCheckbox({
+            "selectAllBtn": true,
+            "selectAllText": "Все водители",
+            "checkedClass": 'btn-info',
+            ifChecked: function () {
+            },
+            ifUnChecked: function () {
+            },
+            ifToggled: function () { }
+        });
+    </script>
+}
+
+@Scripts.Render("~/bundles/simscheckbox")
