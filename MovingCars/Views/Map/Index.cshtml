@@ -7,25 +7,36 @@
 <h2>@ViewBag.Title</h2>
 
 @*<img src="@Url.Action("RenderImage", "Map")" />*@
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
 <div class="container">
     <div class="row">
-        <div class="col-lg-6 col-md-6" id="myMap" style="width: 1000px; height: 700px;"></div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-3 col-md-3">
             <div class="row">
-                @Html.DropDownList("driverSelector", (SelectList)ViewBag.CustomerID, "выберите водителя")
+                @Html.DropDownList("driverSelector", (SelectList)ViewBag.CustomerID, "-выберите водителя- ", new { @class = "chzn-select", @style = "width:160px;" })
+                @*, "выберите водителя")*@
             </div>
             <div class="row">
-                <button id="mapPoint">Местоположение</button>
                 <p id="placement"> </p>
             </div>
             <div class="row">
-                <button id="mapLine">маршрут</button>
+                <span id="mapLine">Маршруты</span>
+                <select id="Period">
+                    <option value="1">Завтра</option>
+                    <option value="0" selected id="defaultOption">Сегодня</option>
+                    <option value="-1">Вчера</option>
+                    <option value="-7">Неделя</option>
+                    <option value="-30">Месяц</option>
+                </select>
+            </div>
+            <div class="row">
+                <div id="listContainer" style="height: 200px; overflow: auto;">
+                    <ul id="ulDemo" class="demo"></ul>
+                </div>
             </div>
         </div>
+        <div class="col-lg-9 col-md-9" id="myMap" style="height: 700px;"></div>
     </div>
 </div>
 
@@ -40,69 +51,101 @@
             var myMap = new ymaps.Map('myMap', {
                 center: [57.15, 65.5],
                 zoom: 12,
-                behaviors: ["drag","scrollZoom"]
+                behaviors: ["drag", "scrollZoom"]
             });
 
-            var myCollection = new ymaps.GeoObjectCollection({}, {
-                preset: 'twirl#blueIcon', //все метки красные
-                draggable: true // и их можно перемещать
-            });
             var lastObjects = new ymaps.GeoObjectCollection({}, {
                 preset: 'twirl#redIcon', //все метки красные
                 draggable: true // и их можно перемещать
             });
+            var tracksCollection = new ymaps.GeoObjectCollection({}, {
+                preset: 'twirl#blueIcon', //все метки голубые
+                draggable: true // и их можно перемещать
+            });
+
+            var setDefault = function () {
+                lastObjects.removeAll();
+                emptyTracks();
+            }
+
+            var emptyTracks = function () {
+                tracksCollection.removeAll();
+                $("#ulDemo").empty();
+            }
 
             // Кнопка изменения масштаба
             myMap.controls.add('zoomControl');
-            myMap.geoObjects.add(myCollection);
             myMap.geoObjects.add(lastObjects);
+            myMap.geoObjects.add(tracksCollection);
 
             var driverSelect = $("driverSelector");
 
-            $("#mapLine").on("click", function () {
+            var createUL = function (dataSet) {
+                var ul = document.getElementById("ulDemo");
+                for (var i = 0; i < dataSet.value.length; i++) {
+                    var li = document.createElement("li");
+                    li.id = dataSet.value[i].Id;
+                    li.title = dataSet.value[i].title;
+                    li.appendChild(document.createTextNode(dataSet.value[i].text));
+                    ul.appendChild(li);
+                }
+            }
 
+            var getOrdersByPeriod = function () {
+                emptyTracks();
                 $.ajax({
-                    url: "/Map/GetTrack",
-                    data: "id=" + $("#driverSelector").val(),
-                }).done(function (data) {
-                    myCollection.add(new ymaps.Polyline(data.value, { hintContent: data.hint }, { strokeWidth: 4 }));
-                });
-            });
-
-            $("#mapPoint").on("click", function () {
-
-                $.ajax({
-                    url: "/Map/GetPoint",
-                    data: "id=" + $("#driverSelector").val(),
-                }).done(function (data) {
-                    document.getElementById('placement').innerHTML = "";
-                    myMap.setCenter(data.value, myMap.zoom);
-                    myCollection.removeAll();
-                    lastObjects.removeAll();
-                    lastObjects.add(new ymaps.Placemark(data.value));
-                    ymaps.geocode(data.value, { kind: 'house' }).then(function (res) {
-                        var firstGeoObject = res.geoObjects.get(0);
-                        console.log(firstGeoObject.properties._O.metaDataProperty.GeocoderMetaData.text);
-                        document.getElementById('placement').innerHTML = firstGeoObject.properties._O.metaDataProperty.GeocoderMetaData.text;
+                    url: "/Map/GetOrders",
+                    data: { id: $("#Period").val(), driverid: $("#driverSelector").val() },
+                }).done(function (dataSet) {
+                    createUL(dataSet);
+                    $(".demo").simsCheckbox({
+                        ifChecked: function () {
+                            $.ajax({
+                                url: "/Map/GetTrack",
+                                data: "id=" + $(this).attr('id'),
+                            }).done(function (data) {
+                                tracksCollection.add(new ymaps.Polyline(data.value, { id: data.id, hintContent: data.hint }, { strokeWidth: 4 }));
+                            });
+                        },
+                        ifUnChecked: function () {
+                            var currentId = $(this).attr('id');
+                            tracksCollection.each(function (item) {
+                                if (item.properties._O.id == currentId) {
+                                    tracksCollection.remove(item);
+                                }
+                            })
+                        },
+                        ifToggled: function () { }
                     });
                 });
-            });
+            }
+
+            $("#Period").on("change", getOrdersByPeriod);
 
             $("#driverSelector").on("change", function () {
-
+                setDefault();
                 $.ajax({
                     url: "/Map/GetPoint",
                     data: "id=" + $("#driverSelector").val(),
                 }).done(function (data) {
                     myMap.setCenter(data.value, myMap.zoom);
-                    lastObjects.each(function (geoObject, i) {
-                        myCollection.add(geoObject);
-                    });
                     lastObjects.add(new ymaps.Placemark(data.value));
                     document.getElementById('placement').innerHTML = "";
+                    ymaps.geocode(data.value, { kind: 'house' }).then(function (res) {
+                        var firstGeoObject = res.geoObjects.get(0);
+                        if (firstGeoObject == null) {
+                            document.getElementById('placement').innerHTML = "Не удалось получить адрес для данной точки.";
+                        }
+                        else {
+                            document.getElementById('placement').innerHTML = firstGeoObject.properties._O.metaDataProperty.GeocoderMetaData.text;
+                        }
+                    });
+                    document.getElementById('defaultOption').selected = "selected";
+                    getOrdersByPeriod();
                 });
             });
         }
-
     </script>
 }
+
+@Scripts.Render("~/bundles/simscheckbox")
