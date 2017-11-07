@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using YandexAPI.Maps;
 using System.IO;
 using MovingCars.Mapping;
 using MovingCars.Models;
@@ -25,19 +24,6 @@ namespace MovingCars.Controllers
             var entyties = this.db.Drivers.Select(s => new { Id = s.Id, Name = s.LastName + " " + s.FirstName + " " + s.Patronymic });
             ViewBag.CustomerID = new SelectList(entyties, "Id", "Name");
             return View();
-        }
-
-        public ActionResult RenderImage()
-        {
-            YandexAPI.Maps.GeoCode geoCode = new GeoCode();
-
-            string address = "Тюмень, " + "Харьковская 75/1";
-
-            string ResultSearchObject = geoCode.SearchObject(address.Trim());
-            ViewBag.Point = geoCode.GetPoint(ResultSearchObject);
-            string ImageUrl = geoCode.GetUrlMapImage(ResultSearchObject, 16, 650, 450);
-
-            return File(geoCode.DownloadMapByteArray(ImageUrl), "image/jpeg");
         }
 
         public JsonResult GetTrack(int id)

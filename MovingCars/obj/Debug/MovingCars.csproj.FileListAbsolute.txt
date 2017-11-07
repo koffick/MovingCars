@@ -53,8 +53,6 @@ D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddAddress.reso
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddPassenger.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.UpdPassenger.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddOrder.resources
-D:\Develop\MovingCars\MovingCars\bin\YandexAPI.dll
-D:\Develop\MovingCars\MovingCars\bin\YandexAPI.pdb
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.csprojResolveAssemblyReference.cache
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.AddPoint.resources
 D:\Develop\MovingCars\MovingCars\obj\Debug\MovingCars.Migrations.UpdOrder.resources
